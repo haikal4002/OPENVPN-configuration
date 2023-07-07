@@ -1,0 +1,19 @@
+port 1194
+proto udp
+dev tun
+ca ca.crt
+cert server1.crt
+key server1.key
+dh dh.pem
+plugin /usr/lib/openvpn/openvpn-plugin-auth-pam.so /etc/pam.d/login
+management localhost 8443
+verify-client-cert none
+username-as-common-name
+server 100.100.100.0 255.255.255.0
+ifconfig-pool-persist ipp.txt
+keepalive 5 30
+comp-lzo
+persist-key
+persist-tun
+status server-tcp.log
+verb 3
