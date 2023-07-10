@@ -4,8 +4,8 @@ proto udp
 remote 192.168.2.128 1194
 resolv-retry infinite
 nobind
-user nobody
-group nogroup
+user nobody # no user
+group nogroup # no group
 persist-key
 persist-tun
 ca ca.crt
