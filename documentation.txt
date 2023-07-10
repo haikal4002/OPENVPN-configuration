@@ -1,0 +1,88 @@
+port 1194 # port on used
+proto udp # protocol to used
+dev tun # virtual network interfaces
+ca ca.crt # location ca certificate
+cert server1.crt # location server certificate
+key server1.key # location server key
+dh dh.pem # location dh
+plugin /usr/lib/openvpn/openvpn-plugin-auth-pam.so /etc/pam.d/login #plugin login authentication
+management localhost 8443 # monitoring (ip) and port
+verify-client-cert none # dont do verify client certificate
+username-as-common-name # Use the authenticated username as the common-name
+server 100.100.100.0 255.255.255.0 # ip will be borrow to client vpn
+ifconfig-pool-persist ipp.txt # this option is to provide a long-term association between clients and the virtual IP address assigned to them from the ifconfig-pool.
+keepalive 10 120 # helper directive designed to simplify the expression of --ping and --ping-restart.
+cipher AES-256-GCM # Encrypt data channel packets with cipher algorithm
+auth SHA256 # Encrypt authentication
+persist-key # persist key
+persist-tun # persist tun
+persist-remote-ip # persist remorte-ip
+tls-auth static.key 0 
+status server-tcp.log #location log of status
+verb 3 # verbose lvl 3, that will noted on log-file
+
+
+client # definition client
+dev tun # virtual network interfaces
+proto udp # protocol to used
+remote 192.168.216.128 1194 # ip addr or domain and port server vpn
+cipher AES-256-GCM # Encrypt data channel packets with cipher algorithm
+auth SHA256 # Encrypt authentication
+resolv-retry infinite # resolving with infinite
+nobind # Do not bind to local address and port
+persist-key # persist key
+persist-tun # persist tun
+persist-remote-ip # persist remote-ip
+<ca> # this parameter is contain of CA certificate
+-----BEGIN CERTIFICATE-----
+MIIDRTCCAi2gAwIBAgIUDXLgLE6JcJsAo9hyUHwtGpmrukcwDQYJKoZIhvcNAQEL
+BQAwFDESMBAGA1UEAwwJU2VydmVyLUNBMB4XDTIzMDYyNzA2NTY1MloXDTMzMDYy
+NDA2NTY1MlowFDESMBAGA1UEAwwJU2VydmVyLUNBMIIBIjANBgkqhkiG9w0BAQEF
+AAOCAQ8AMIIBCgKCAQEAxUi3xwC0ocf/dwWQq0QLif10TEZfROrR9d++0AA8ZdHZ
+FppVTnaMmKpeCvErubhkXfATM2YgIew0EIyT0tNCSeYtYcYAL+hByPZ33aeaRw/2
+DGeuh92daznbkDYPvvSa8N42RI1EoFkbmuxlA4U2a0ZpeFmDOPvMT8u/in8epx85
+p0yIoFPtBuwVa5DrThGEGZ7yT+C5+oxlvtTofTRnKF6GbYNtPOHyUZotZdK9IM3a
+GMe2srEyafvEAYmhwyRUJfaU/e+/0vxB+V/NZM4/gu/yYGdG5DCHyVKh2UI22UDF
+bwzrblAUt386D9srsjqYQ/n2A95dHUjXXje1cNPBvwIDAQABo4GOMIGLMB0GA1Ud
+DgQWBBQNNIpgSMDlJmQNscbgxo82S+JUqTBPBgNVHSMESDBGgBQNNIpgSMDlJmQN
+scbgxo82S+JUqaEYpBYwFDESMBAGA1UEAwwJU2VydmVyLUNBghQNcuAsTolwmwCj
+2HJQfC0amau6RzAMBgNVHRMEBTADAQH/MAsGA1UdDwQEAwIBBjANBgkqhkiG9w0B
+AQsFAAOCAQEAOoL/ze0+3kkOP5PJDKhzVGvDH5QvxHj/ANcd+vAAzNG7mTtWRYSv
+c//YQbZElMKJagT+c7cImIsPF4h61EfDHkHGEjKHQqFfFg4h2uGNxdfXPxbHSAVa
+3RIUbjwlVqZEYa7YhXoHBns8Qu9V9wn0GK2p/h7U4mv3ZcfAR/JdTOlgzW7DUVQj
+pVv9mKglMV6OKjygQUXEKpSDd6hF7NFrRa7cO261EWj2rUOYVUqogjOzAxdxMAn7
+jJgO5y56SrAHqKxM1CKaPmAEX4k55esHRs8u1Om1uK/t6LPVu8T4ASnnHBfKjluI
+RQEAnZ6rm25kxz+crkjrTx5yR0L60O5ZZQ==
+-----END CERTIFICATE-----
+</ca>
+fast-io # The purpose of such a call would normally be to block until the device or socket is ready to accept the write.
+auth-user-pass
+reneg-sec 0 # Renegotiate data channel key
+reneg-bytes 0 # Renegotiate data channel key after n bytes
+verb 3 # verbose lvl 3, that will noted on log-file
+key-direction 1 # Alternative way of specifying the optional direction parameter for the --tls-auth and --secret options.
+<tls-auth>
+#
+# 2048 bit OpenVPN static key
+#
+-----BEGIN OpenVPN Static key V1-----
+02aae88ceb09efa7e64e3d16d3fa84ea
+2186cf478f212afafe5f2b5988c8907e
+447b0615652798b8a32b2780b356939a
+29d359651ad384a0627eb097425c5c57
+8197c8224adf1d880b58ca16fa44da2e
+b29e6c61298c46b9c51a6c76b6aca218
+0b57ab12fb5a277765742bc7f9cd64c8
+1a84bbe967375e25ada10d913faf105b
+f4d87cc86113ccc971f13f4973aacdb6
+82264fab669af749d36805c8ae362a1c
+cd841fb8b9d9c134b15bfd053b8953fb
+43b5454b70c6a2cbfb0451a063440601
+267edb85f8e484ef94a042c952e13d33
+6c9fe8df9e9c181d5e953a047b2a9000
+3a3953e99e772317357dcde73ace1d27
+3b1b8d7ffc919f27a78d113972f04cda
+-----END OpenVPN Static key V1-----
+</tls-auth>
+remote-cert-tls server # This is a useful security option for clients, to ensure that the host they connect to is a designated server
+auth-nocache # authentication will not save user and password that used to connect
