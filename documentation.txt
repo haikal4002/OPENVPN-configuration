@@ -17,7 +17,7 @@ auth SHA256 # Encrypt authentication
 persist-key # persist key
 persist-tun # persist tun
 persist-remote-ip # persist remorte-ip
-tls-auth static.key 0 
+tls-auth static.key 0 # authentication tls mode
 status server-tcp.log #location log of status
 verb 3 # verbose lvl 3, that will noted on log-file
 
@@ -86,3 +86,28 @@ cd841fb8b9d9c134b15bfd053b8953fb
 </tls-auth>
 remote-cert-tls server # This is a useful security option for clients, to ensure that the host they connect to is a designated server
 auth-nocache # authentication will not save user and password that used to connect
+
+
+port 1194 # port on used
+proto udp # # protocol to used
+dev tun # virtual network interfaces
+ca ca.crt # location ca certificate
+cert server.crt # location server certificate
+key server.key # location server key
+dh dh.pem # location dh
+server 192.168.56.0 255.255.255.0 # ip will be borrow to client vpn
+push "redirect-gateway def1 bypass-dhcp" # Automatically execute routing commands to cause all outgoing IP traffic to be redirected over the VPN.
+push "dhcp-option DNS 208.67.222.222" # Automatically to use dns for VPN
+push "dhcp-option DNS 208.67.220.220" # Same
+keepalive 10 120 # helper directive designed to simplify the expression of --ping and --ping-restart.
+tls-auth ta.key 0 # authentication tls mode
+cipher AES-256-CBC # Encrypt data channel packets with cipher algorithm
+user nobody # no user
+group nogroup # no group
+persist-key # persist key
+persist-tun # persist tun
+status /var/log/openvpn/openvpn-status.log # location of log status
+log /var/log/openvpn/openvpn.log # location of log
+log-append /var/log/openvpn/openvpn.log # location of log-append
+verb 3 # verbose lvl 3, that will noted on log-file
+explicit-exit-notify 1 # client will attempt to reconnect to the same server.
