@@ -60,5 +60,5 @@ cd841fb8b9d9c134b15bfd053b8953fb
 3b1b8d7ffc919f27a78d113972f04cda
 -----END OpenVPN Static key V1-----
 </tls-auth>
-remote-cert-tls server
+remote-cert-tls server # This is a useful security option for clients, to ensure that the host they connect to is a designated server
 auth-nocache
