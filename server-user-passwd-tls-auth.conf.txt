@@ -1,22 +1,22 @@
-port 1194
-proto udp
-dev tun
-ca ca.crt
-cert server1.crt
-key server1.key
-dh dh.pem
-plugin /usr/lib/openvpn/openvpn-plugin-auth-pam.so /etc/pam.d/login
-management localhost 8443
-verify-client-cert none
-username-as-common-name
-server 100.100.100.0 255.255.255.0
-ifconfig-pool-persist ipp.txt
-keepalive 10 120
+port 1194 # port on used
+proto udp # protocol to used
+dev tun 
+ca ca.crt # location ca certificate
+cert server1.crt # location server certificate
+key server1.key # location server key
+dh dh.pem # location dh
+plugin /usr/lib/openvpn/openvpn-plugin-auth-pam.so /etc/pam.d/login #plugin login authentication
+management localhost 8443 # monitoring (ip) and port
+verify-client-cert none # dont do verify client certificate
+username-as-common-name # Use the authenticated username as the common-name
+server 100.100.100.0 255.255.255.0 # ip will be borrow to client vpn
+ifconfig-pool-persist ipp.txt # this option is to provide a long-term association between clients and the virtual IP address assigned to them from the ifconfig-pool.
+keepalive 10 120 # helper directive designed to simplify the expression of --ping and --ping-restart.
 cipher AES-256-GCM
 auth SHA256
 persist-key
 persist-tun
 persist-remote-ip
 tls-auth static.key 0
-status server-tcp.log
+status server-tcp.log #location log of status
 verb 3
