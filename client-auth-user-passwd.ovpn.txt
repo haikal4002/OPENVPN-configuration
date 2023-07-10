@@ -1,16 +1,16 @@
-client
-dev tun
-proto udp
-remote 192.168.216.128 1194
-resolv-retry infinite
-nobind
-persist-key
+client # definition client
+dev tun # virtual network interfaces
+proto udp # protocol
+remote 192.168.216.128 1194 # ip addr or domain and port server vpn
+resolv-retry infinite # resolving with infinite
+nobind # Do not bind to local address and port
+persist-key 
 persist-tun
-auth-user-pass
-auth-nocache
-comp-lzo
-verb 3
-<ca>
+auth-user-pass # authentication with user & password, this can combined with file that contain specific user and password
+auth-nocache # authentication will not save user and password that used to connect
+comp-lzo # compression data with lzo method
+verb 3 # verbose lvl 3, that will noted on log-file
+<ca> # this parameter is contain of CA certificate
 -----BEGIN CERTIFICATE-----
 MIIDRTCCAi2gAwIBAgIUDXLgLE6JcJsAo9hyUHwtGpmrukcwDQYJKoZIhvcNAQEL
 BQAwFDESMBAGA1UEAwwJU2VydmVyLUNBMB4XDTIzMDYyNzA2NTY1MloXDTMzMDYy
