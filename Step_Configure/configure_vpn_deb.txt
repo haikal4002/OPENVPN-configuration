@@ -1,0 +1,62 @@
+*********************************************          
+BIENVENUE SUR MA CHAINE YOUTUBE
+-------------------------------------------------------
+WELCOME TO MY YOUTUBE CHANNEL
+*********************************************
+Installation et Configuration OPENVPN
+
+apt -y install openvpn easy-rsa iptables
+
+ cd /usr/share/easy-rsa
+
+./easyrsa init-pki
+
+./easyrsa build-ca
+
+./easyrsa build-server-full server1 nopass
+
+./easyrsa build-client-full client1 nopass
+
+./easyrsa gen-dh
+
+openvpn --genkey secret ./pki/ta.key
+
+cp -pR /usr/share/easy-rsa/pki/{issued,private,ca.crt,dh.pem,ta.key} /etc/openvpn/server/
+
+cp /usr/share/doc/openvpn/examples/sample-config-files/server.conf /etc/openvpn/server/
+
+nano /etc/openvpn/server/server.conf
+# follow the config file
+
+(OPTIONAL, This step for connect to the Internet)
+
+nano /etc/openvpn/server/add-bridge.sh
+
+echo 1 > /proc/sys/net/ipv4/ip_forward
+iptables -A FORWARD -i ${VPNIF} -j ACCEPT
+iptables -t nat -A POSTROUTING -o ${IF} -j MASQUERADE
+
+nano /etc/openvpn/server/remove-bridge.sh
+
+echo 0 > /proc/sys/net/ipv4/ip_forward
+iptables -D FORWARD -i  ${VPNIF} -j ACCEPT
+iptables -t nat -D POSTROUTING -o ${IF} -j MASQUERADE
+
+ chmod 700 /etc/openvpn/server/{add-bridge.sh,remove-bridge.sh}
+
+/lib/systemd/system/openvpn-server@.service
+
+ExecStartPost=/etc/openvpn/server/add-bridge.sh
+ExecStopPost=/etc/openvpn/server/remove-bridge.sh
+
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+systemctl daemon-reload
+systemctl enable --now openvpn-server@server
+systemctl enable openvpn@server
+systemctl restart openvpn
+systemctl restart openvpn@server
+
+
